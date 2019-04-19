@@ -17,7 +17,7 @@ class JavaGen(genOpts: GenOpts) extends Generator(genOpts) {
     methodNames.checkUserSymbol(className)
     val res = generateForObj(objectType, className = className, isRoot = true)
 
-    val packageStr = s"package ${genOpts.packageName};\n\n"
+    val packageStr = s"package ${genOpts.packageName};\n\nimport java.io.Serializable;\n\n"
 
     val definition = (packageStr + res.definition).trim
     res.copy(definition = res.definition.trim)
@@ -113,8 +113,8 @@ class JavaGen(genOpts: GenOpts) extends Generator(genOpts) {
       objOnes + rootOnes
     }
 
-    val classStr = {
-      s"""public ${if (isRoot) "" else "static "}class $classNameAdjusted {
+    val classStr =
+      s"""public ${if (isRoot) "" else "static "}class $classNameAdjusted implements Serializable {
          |  $classDeclMembersStr$classMemberGettersStr
          |  $membersStr
          |  public $classNameAdjusted(com.typesafe.config.Config c) {
@@ -122,7 +122,6 @@ class JavaGen(genOpts: GenOpts) extends Generator(genOpts) {
          |  }$elemAccessorsStr
          |}
          |""".stripMargin
-    }
 
     Res(ot,
       javaType = BaseJavaType(classNamePrefixOpt.getOrElse("") + classNameAdjusted),

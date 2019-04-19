@@ -3,6 +3,12 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/carueda/tscfg/badge.svg?targetFile=build.sbt)](https://snyk.io/test/github/carueda/tscfg?targetFile=build.sbt)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
+## tscfg forked
+Java Class Serializable
+
+"java.nio.charset.MalformedInputException: Input length = 1" error fix
+
+
 ## tscfg
 
 tscfg is a command line tool that takes a configuration specification

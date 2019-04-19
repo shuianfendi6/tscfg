@@ -21,3 +21,6 @@ project/plugins/project/
 .worksheet
 
 # Created by .ignore support plugin (hsz.mobi)
+/.idea/
+.idea/
+src/main/scala/META-INF/

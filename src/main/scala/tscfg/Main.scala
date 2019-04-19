@@ -7,6 +7,8 @@ import com.typesafe.config.ConfigFactory
 import tscfg.generators.java.JavaGen
 import tscfg.generators.scala.ScalaGen
 import tscfg.generators.{GenOpts, Generator, TemplateOpts, TemplateGenerator}
+import java.nio.charset.CodingErrorAction
+import scala.io.Codec
 
 /**
   * The main program. Run with no arguments to see usage.
@@ -162,6 +164,9 @@ object Main {
                           useDurations = opts.useDurations)
 
     println(s"parsing: $inputFilename")
+    implicit val codec = Codec("UTF-8")
+    codec.onMalformedInput(CodingErrorAction.REPLACE)
+    codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
     val source = io.Source.fromFile(new File(inputFilename)).mkString.trim
 
     val buildResult = ModelBuilder(source)
