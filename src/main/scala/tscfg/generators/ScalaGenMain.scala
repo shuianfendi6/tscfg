@@ -32,7 +32,8 @@ object ScalaGenMain {
     import _root_.java.io._
     val destFilename  = s"src/main/scala/tscfg/example/Cfg.scala"
     val destFile = new File(destFilename)
-    val out = new PrintWriter(new FileWriter(destFile), true)
+    val out= new PrintWriter((new OutputStreamWriter(
+      new FileOutputStream(destFile), "UTF-8")))
     out.println(res.code)
   }
   // $COVERAGE-ON$

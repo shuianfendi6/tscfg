@@ -1,13 +1,14 @@
 package tscfg
 
-import java.io.{File, PrintWriter}
+import java.io.{File, FileOutputStream, OutputStreamWriter, PrintWriter}
 import java.util.Date
 
 import com.typesafe.config.ConfigFactory
 import tscfg.generators.java.JavaGen
 import tscfg.generators.scala.ScalaGen
-import tscfg.generators.{GenOpts, Generator, TemplateOpts, TemplateGenerator}
+import tscfg.generators.{GenOpts, Generator, TemplateGenerator, TemplateOpts}
 import java.nio.charset.CodingErrorAction
+
 import scala.io.Codec
 
 /**
@@ -154,7 +155,8 @@ object Main {
     val inputFilename = opts.inputFilename.get
     val destFilename  = s"${opts.destDir}/${opts.className}.$ext"
     val destFile = new File(destFilename)
-    val out = new PrintWriter(destFile)
+    val out = new PrintWriter((new OutputStreamWriter(
+      new FileOutputStream(destFile), "UTF-8")))
 
     val genOpts = GenOpts(opts.packageName, opts.className, opts.j7,
                           reportFullPath = opts.reportFullPath,
@@ -203,7 +205,8 @@ object Main {
     opts.tplFilename foreach { filename ⇒
       println(s"generating template $filename")
       val destFile = new File(filename)
-      val out = new PrintWriter(destFile)
+      val out= new PrintWriter((new OutputStreamWriter(
+        new FileOutputStream(destFile), "UTF-8")))
       val templater = new TemplateGenerator(templateOpts)
       val template = templater.generate(objectType)
       out.println(template)

@@ -1,10 +1,10 @@
 package tscfg
 
-import java.io.{File, FileWriter, PrintWriter}
+import java.io.{File, FileOutputStream, OutputStreamWriter, PrintWriter}
 
 import tscfg.generators.java.JavaGen
-import tscfg.generators.{GenOpts, Generator}
 import tscfg.generators.scala.ScalaGen
+import tscfg.generators.{GenOpts, Generator}
 
 object gen4tests {
   def main(args: Array[String]): Unit = {
@@ -64,8 +64,10 @@ object gen4tests {
         }
 
         val results = generator.generate(objectType)
-        val out = new PrintWriter(new FileWriter(targetFile), true)
+        val out= new PrintWriter((new OutputStreamWriter(
+            new FileOutputStream(targetFile), "UTF-8")))
         out.println(results.code)
+        out.close()
       }
       // $COVERAGE-ON$
     }
