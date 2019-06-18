@@ -32,8 +32,10 @@ object JavaGenMain {
     import _root_.java.io._
     val destFilename  = s"src/main/java/tscfg/example/JCfg.java"
     val destFile = new File(destFilename)
-    val out = new PrintWriter(new FileWriter(destFile), true)
+    val out= new PrintWriter((new OutputStreamWriter(
+      new FileOutputStream(destFile), "UTF-8")))
     out.println(res.code)
+    out.close()
   }
   // $COVERAGE-ON$
 }

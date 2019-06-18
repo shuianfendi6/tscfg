@@ -1,9 +1,9 @@
 package tscfg.generators.scala
 
-import tscfg.{ModelBuilder, model}
 import tscfg.generators._
 import tscfg.model._
 import tscfg.util.escapeString
+import tscfg.{ModelBuilder, model}
 
 
 class ScalaGen(genOpts: GenOpts) extends Generator(genOpts) {
@@ -14,7 +14,7 @@ class ScalaGen(genOpts: GenOpts) extends Generator(genOpts) {
   import methodNames._
 
   val scalaUtil: ScalaUtil = new ScalaUtil(useBackticks = genOpts.useBackticks)
-  import scalaUtil.{scalaIdentifier, getClassName}
+  import scalaUtil.{getClassName, scalaIdentifier}
 
   def generate(objectType: ObjectType): GenResult = {
     genResults = GenResult()
@@ -158,7 +158,7 @@ class ScalaGen(genOpts: GenOpts) extends Generator(genOpts) {
 }
 
 object ScalaGen {
-  import _root_.java.io.{File, PrintWriter, FileWriter}
+  import _root_.java.io.File
 
   import tscfg.util
 
@@ -199,8 +199,11 @@ object ScalaGen {
 
     val destFilename  = s"src/test/scala/tscfg/example/$className.scala"
     val destFile = new File(destFilename)
-    val out = new PrintWriter(new FileWriter(destFile), true)
+    import _root_.java.io._
+    val out= new PrintWriter((new OutputStreamWriter(
+      new FileOutputStream(destFile), "UTF-8")))
     out.println(results.code)
+    out.close()
     results
   }
 

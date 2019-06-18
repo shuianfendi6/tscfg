@@ -1,7 +1,7 @@
 package tscfg.generators.java
 
-import tscfg.generators.java.javaUtil._
 import tscfg.generators._
+import tscfg.generators.java.javaUtil._
 import tscfg.model._
 import tscfg.util.escapeString
 
@@ -322,7 +322,7 @@ class JavaGen(genOpts: GenOpts) extends Generator(genOpts) {
 }
 
 object JavaGen {
-  import _root_.java.io.{File, FileWriter, PrintWriter}
+  import _root_.java.io.{File, FileOutputStream, OutputStreamWriter, PrintWriter}
 
   import tscfg.{ModelBuilder, model, util}
 
@@ -365,8 +365,11 @@ object JavaGen {
 
     val destFilename  = s"src/test/java/tscfg/example/$className.java"
     val destFile = new File(destFilename)
-    val out = new PrintWriter(new FileWriter(destFile), true)
+//    val out = new PrintWriter(new FileWriter(destFile), true)
+    val out= new PrintWriter((new OutputStreamWriter(
+      new FileOutputStream(destFile), "UTF-8")))
     out.println(results.code)
+    out.close()
     results
   }
 
